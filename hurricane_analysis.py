@@ -102,23 +102,61 @@ def max_affected(areas_affected_count):
   
 max_affected(areas_affected_count)
 # 6
-# Calculating the Deadliest Hurricane
+def greatest_deaths (hurricane_dictionary):
+  hurricane_name = ""
+  total_deaths = 0
+  for hurricane in hurricane_dictionary.values():
+    if hurricane.get("Deaths") > total_deaths:
+      hurricane_name = hurricane.get("Name")
+      total_deaths = hurricane.get("Deaths")
+  return hurricane_name, total_deaths
 
-# find highest mortality hurricane and the number of deaths
+hurricane, deaths = greatest_deaths(hurricane_dict)
 
-# 7
-# Rating Hurricanes by Mortality
+greatest_deaths (hurricane_dict)
+print("The greatest number of deaths is:{deaths} from hurricane {hurricane}".format(deaths = deaths, hurricane = hurricane))
 
+def categorize_by_mortality (hurricane_dictionary):
+  hurricane_by_mortality = {0:[], 1:[], 2:[], 3:[], 4:[]}
+  
+  for hurricane in hurricane_dictionary.values():
+    deaths = hurricane.get("Deaths")
+    if deaths >= 0 and deaths < 100:
+      hurricane_by_mortality[0].append(hurricane.get("Name"))
+    elif deaths >=100 and deaths < 500:
+      hurricane_by_mortality[1].append(hurricane.get("Name"))
+    elif deaths >=500 and deaths < 1000:
+      hurricane_by_mortality[2].append(hurricane.get("Name"))
+    elif deaths >=1000 and deaths < 10000:
+      hurricane_by_mortality[3].append(hurricane.get("Name"))
+    else:
+      hurricane_by_mortality[4].append(hurricane.get("Name"))
+  
+  return hurricane_by_mortality
 
-# categorize hurricanes in new dictionary with mortality severity as key
+hurricane = categorize_by_mortality (hurricane_dict)
 
-
-# 8 Calculating Hurricane Maximum Damage
-
-# find highest damage inducing hurricane and its total cost
-
+print("***")
+for category, name_list in hurricane.items():
+  print("Category {category}: {hurricanes}".format(category = category, hurricanes = name_list))
 
 # 9
+def greatest_damages (hurricane_dictionary):
+  hurricane_name = ""
+  max_damage = 0
+  for hurricane in hurricane_dictionary.values():
+    if type(hurricane.get("Damage"))!=str:
+      if hurricane.get("Damage") > max_damage:
+        hurricane_name = hurricane.get("Name")
+        max_damage = hurricane.get("Damage")
+  return hurricane_name, max_damage
+
+hurricane, damages = greatest_damages(hurricane_dict)
+
+greatest_damages (hurricane_dict)
+
+print("The greatest number of damages is:{damages} from hurricane {hurricane}".format(damages = damages, hurricane = hurricane))
+
 # Rating Hurricanes by Damage
 damage_scale = {0: 0,
                 1: 100000000,
@@ -127,3 +165,24 @@ damage_scale = {0: 0,
                 4: 50000000000}
   
 # categorize hurricanes in new dictionary with damage severity as key
+def categorize_by_damage (hurricane_dictionary):
+  hurricane_by_damage = {0:[], 1:[], 2:[], 3:[], 4:[]}
+  
+  for hurricane in hurricane_dictionary.values():
+    damages = hurricane.get("Damage")
+    if type(damages)!=str:
+      if damages == 0:
+        hurricane_by_damage[0].append(hurricane.get("Name"))
+      elif damages > 0 and damages < 100000000:
+        hurricane_by_damage[1].append(hurricane.get("Name"))
+      elif damages >=100000000 and damages < 1000000000:
+        hurricane_by_damage[2].append(hurricane.get("Name"))
+      elif damages >=1000000000 and damages < 10000000000:
+        hurricane_by_damage[3].append(hurricane.get("Name"))
+      elif damages >=10000000000 and damages <50000000000:
+        hurricane_by_damage[4].append(hurricane.get("Name"))
+  
+  return hurricane_by_damage
+
+hurricane = categorize_by_damage(hurricane_dict)
+print("Damages list:",hurricane)
